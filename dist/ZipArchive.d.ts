@@ -1,0 +1,31 @@
+import { ZipEntry } from "./ZipEntry";
+export declare class ZipArchive {
+    private entries;
+    private comment?;
+    has(file_name: string): boolean;
+    is_folder(file_name: string): boolean;
+    get(file_name: string): ZipEntry | undefined;
+    delete(file_name: string): boolean;
+    set(file_name: string, file: Blob | string | ArrayBuffer): Promise<ZipEntry>;
+    set_folder(file_name: string): ZipEntry;
+    copy(from: string, to: string): ZipEntry;
+    move(from: string, to: string): ZipEntry;
+    compress_entry(file_name: string): Promise<ZipEntry>;
+    set_comment(str: string): void;
+    to_blob(): Blob;
+    files(): Iterator<[string, ZipEntry]>;
+    static from_blob(blob: Blob): Promise<ZipArchive>;
+    static set_compression_function(fn: (input: Blob) => Promise<Blob>): void;
+    static set_decompression_function(fn: (input: Blob) => Promise<Blob>): void;
+    private static read_local;
+    private static read_cd;
+    private static find_eocdr;
+    private static read_eocdr;
+    private generate_eocdr;
+    private calculate_crc;
+    private set_internal;
+    private normalise_file_name;
+    private verify_path;
+    private compress_blob;
+}
+export { ZipEntry };
